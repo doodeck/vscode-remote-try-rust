@@ -6,3 +6,5 @@ authors = ["VS Code <vscode@microsoft.com>"]
 [lib]
 path ="./src/lib/lib.rs"
 
+[dependencies]
+rand = "0.8.5"
