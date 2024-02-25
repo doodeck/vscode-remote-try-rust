@@ -35,4 +35,41 @@ fn main() {
             }
         }
     }
+
+    #[warn(dead_code)]
+    enum Message {
+        Quit,
+        Move { x: i32, y: i32 },
+        Write(String),
+        ChangeColor(i32, i32, i32),
+    }
+
+    impl Message {
+        fn call(&self) {
+            let the_match = match self {
+                Message::Write(_) => {
+                    println!("Message::Write");
+                    "Write"
+                }
+                Message::Quit => {
+                    println!("Message::Quit");
+                    "Quit"
+                }
+                Message::Move{ .. } => {
+                    println!("Message::Move");
+                    "Move"
+                }
+                Message::ChangeColor(_, _, _) => {
+                    println!("Message::ChangeColor");
+                    "ChangeColor"
+                }
+            };
+            println!("Matched! Message::{}", the_match);
+        }
+    }
+
+    let mw = Message::Write(String::from("hello"));
+    mw.call();
+    let mq: Message = Message::Quit;
+    mq.call();
 }
