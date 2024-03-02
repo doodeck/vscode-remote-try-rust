@@ -1,8 +1,7 @@
 extern crate rand; // example in the book working without ...
 
-use std::io;
 use rand::Rng;
-use std::cmp::Ordering;
+use std::{io, cmp::Ordering};
 
 fn main() {
     println!("Guess the number!");
