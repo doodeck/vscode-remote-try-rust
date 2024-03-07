@@ -2,6 +2,8 @@ extern crate rand; // example in the book working without ...
 
 use rand::Rng;
 use std::{io, cmp::Ordering};
+use std::env;
+
 
 pub struct Guess {
     value: i32,
@@ -22,7 +24,39 @@ impl Guess {
 }
 
 
+fn help() {
+    println!("usage:
+pass a single argument or none whatsoever")
+}
+
+fn parse_args() {
+    let args: Vec<String> = env::args().collect();
+
+    match args.len() {
+        // no arguments passed
+        1 => {
+            println!("Try passing some arguments!");
+        },
+        // one argument passed
+        2 => {
+            match args[1].as_str() {
+                "-i" => println!("Short option!"),
+                "--interactive" => println!("Long option!"),
+                _ => println!("Unrecognized option.")
+            }
+        },
+        // all the other cases
+        _ => {
+            // show a help message
+            help();
+        }
+    }
+}
+
+
 fn main() {
+    parse_args();
+
     println!("Guess the number!");
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
