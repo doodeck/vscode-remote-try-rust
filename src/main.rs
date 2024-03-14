@@ -25,34 +25,41 @@ impl Guess {
 }
 
 
-/// Search for a pattern in a file and display the lines that contain it.
-#[derive(Parser)]
+/// Parse the command line option
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
 struct Cli {
-    /// The algorithm to test
-    option: String,
-}
+    /// Execute Guess game
+    #[arg(short, long)]
+    guess: bool,
 
-fn help() {
-    println!("usage:
-pass a single argument or none whatsoever")
+    /// Execute simple match
+    #[arg(short, long, default_value_t = false)]
+    matcher: bool,
 }
 
 fn parse_args() {
     let args = Cli::parse();
 
-    println!("args: {:?}", args.option);
+    println!("args: {:?}", args);
 
-    match args.option.as_str() {
-        "sh" => println!("Short option!"),
-        "long" => println!("Long option!"),
-        _ => println!("Unrecognized option.")
+    if args.guess {
+        println!("Guess activated");
+        guesser();
+    }
+
+    if args.matcher {
+        println!("Match activated");
+        matcher();
     }
 }
 
 
 fn main() {
     parse_args();
+}
 
+fn guesser() {
     println!("Guess the number!");
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
@@ -83,7 +90,9 @@ fn main() {
             }
         }
     }
+}
 
+fn matcher() {
     #[warn(dead_code)]
     enum Message {
         Quit,
@@ -120,4 +129,8 @@ fn main() {
     mw.call();
     let mq: Message = Message::Quit;
     mq.call();
+    let mm = Message::Move { x: (0), y: (0) };
+    mm.call();
+    let mc = Message::ChangeColor(1, 2, 3);
+    mc.call();
 }
