@@ -104,20 +104,20 @@ fn matcher() {
     impl Message {
         fn call(&self) {
             let the_match = match self {
-                Message::Write(_) => {
-                    println!("Message::Write");
+                Message::Write(string) => {
+                    println!("Message::Write: \"{}\"", string);
                     "Write"
                 }
                 Message::Quit => {
                     println!("Message::Quit");
                     "Quit"
                 }
-                Message::Move{ .. } => {
-                    println!("Message::Move");
+                Message::Move{ x, y } => {
+                    println!("Message::Move({}, {})", x, y);
                     "Move"
                 }
-                Message::ChangeColor(_, _, _) => {
-                    println!("Message::ChangeColor");
+                Message::ChangeColor(r, g, b) => {
+                    println!("Message::ChangeColor: ({},{},{})", r, g, b);
                     "ChangeColor"
                 }
             };
@@ -129,7 +129,7 @@ fn matcher() {
     mw.call();
     let mq: Message = Message::Quit;
     mq.call();
-    let mm = Message::Move { x: (0), y: (0) };
+    let mm = Message::Move { x: (4), y: (5) };
     mm.call();
     let mc = Message::ChangeColor(1, 2, 3);
     mc.call();
