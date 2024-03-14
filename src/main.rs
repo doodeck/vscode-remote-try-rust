@@ -1,8 +1,9 @@
 extern crate rand; // example in the book working without ...
+extern crate clap;
 
 use rand::Rng;
 use std::{io, cmp::Ordering};
-use std::env;
+use clap::Parser;
 
 
 pub struct Guess {
@@ -24,32 +25,27 @@ impl Guess {
 }
 
 
+/// Search for a pattern in a file and display the lines that contain it.
+#[derive(Parser)]
+struct Cli {
+    /// The algorithm to test
+    option: String,
+}
+
 fn help() {
     println!("usage:
 pass a single argument or none whatsoever")
 }
 
 fn parse_args() {
-    let args: Vec<String> = env::args().collect();
+    let args = Cli::parse();
 
-    match args.len() {
-        // no arguments passed
-        1 => {
-            println!("Try passing some arguments!");
-        },
-        // one argument passed
-        2 => {
-            match args[1].as_str() {
-                "-i" => println!("Short option!"),
-                "--interactive" => println!("Long option!"),
-                _ => println!("Unrecognized option.")
-            }
-        },
-        // all the other cases
-        _ => {
-            // show a help message
-            help();
-        }
+    println!("args: {:?}", args.option);
+
+    match args.option.as_str() {
+        "sh" => println!("Short option!"),
+        "long" => println!("Long option!"),
+        _ => println!("Unrecognized option.")
     }
 }
 
