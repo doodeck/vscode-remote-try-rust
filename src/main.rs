@@ -93,14 +93,16 @@ fn guesser() {
 }
 
 fn matcher() {
-    #[derive(Debug)]
     #[warn(dead_code)]
+    #[derive(Debug)]
     enum Direction {
         North,
         West,
         South,
         East
     }
+
+    #[derive(Debug)]
     enum Message {
         Quit,
         Move { x: i32, y: i32 },
@@ -134,6 +136,7 @@ fn matcher() {
                 }
             };
             println!("Matched! Message::{}", the_match);
+            println!("{:?}", self);
         }
     }
 
