@@ -93,12 +93,20 @@ fn guesser() {
 }
 
 fn matcher() {
+    #[derive(Debug)]
     #[warn(dead_code)]
+    enum Direction {
+        North,
+        West,
+        South,
+        East
+    }
     enum Message {
         Quit,
         Move { x: i32, y: i32 },
         Write(String),
         ChangeColor(i32, i32, i32),
+        GoHiking { direction: Direction },
     }
 
     impl Message {
@@ -120,6 +128,10 @@ fn matcher() {
                     println!("Message::ChangeColor: ({},{},{})", r, g, b);
                     "ChangeColor"
                 }
+                Message::GoHiking { direction } => {
+                    println!("Going Hiking in the direction {:?}", direction);
+                    "GoHiking"
+                }
             };
             println!("Matched! Message::{}", the_match);
         }
@@ -133,4 +145,6 @@ fn matcher() {
     mm.call();
     let mc = Message::ChangeColor(1, 2, 3);
     mc.call();
+    let mg = Message::GoHiking { direction: Direction::West };
+    mg.call();
 }
